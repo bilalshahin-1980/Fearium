@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fearium (FER)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+      font-family: Arial, sans-serif;
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%%;
+      background: #111;
+      z-index: 1000;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      margin: 0;
+      padding: 10px 0;
+    }
+    nav ul li {
+      margin: 0 15px;
+    }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    section {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+      padding: 40px;
+    }
+    #hero {
+      background: url('background.jpg') center/cover no-repeat fixed;
+    }
+    #about { background-color: #1c1c1c; }
+    #countdown { background-color: #2e2e2e; }
+    #wallet { background-color: #1c1c1c; }
+    #airdrop { background-color: #2e2e2e; }
+    input, button {
+      padding: 10px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    button {
+      background-color: #00ffff;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#countdown">Launch</a></li>
+      <li><a href="#wallet">Wallet</a></li>
+      <li><a href="#airdrop">Airdrop</a></li>
+    </ul>
+  </nav>
+
+  <section id="hero">
+    <h1>Fearium (FER)</h1>
+    <p>The crypto that moves with the Fear & Greed Index</p>
+  </section>
+
+  <section id="about">
+    <h2>About Fearium</h2>
+    <p>Fearium is a smart token reflecting real-time market emotions: fear and greed.</p>
+  </section>
+
+  <section id="countdown">
+    <h2>Trading Starts</h2>
+    <p>Countdown to May 1, 2025</p>
+  </section>
+
+  <section id="wallet">
+    <h2>Connect Wallet</h2>
+    <button>Connect Wallet</button>
+  </section>
+
+  <section id="airdrop">
+    <h2>Claim Airdrop</h2>
+    <input type="text" placeholder="Enter your BNB wallet address">
+    <button>Claim 50 FER</button>
+  </section>
+</body>
+</html>
