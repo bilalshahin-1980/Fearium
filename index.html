@@ -5,18 +5,21 @@
   <meta charset="UTF-8">
   <title>Fearium (FER)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
   <style>
     body, html {
       margin: 0;
       padding: 0;
       scroll-behavior: smooth;
       font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
     }
     nav {
       position: fixed;
       top: 0;
       width: 100%%;
-      background: #111;
+      background: #000;
       z-index: 1000;
     }
     nav ul {
@@ -36,24 +39,16 @@
     }
     section {
       height: 100vh;
+      padding: 80px 20px 40px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      color: white;
       text-align: center;
-      padding: 40px;
     }
-    #hero {
-      background: url('background.jpg') center/cover no-repeat fixed;
-    }
-    #about { background-color: #1c1c1c; }
-    #countdown { background-color: #2e2e2e; }
-    #wallet { background-color: #1c1c1c; }
-    #airdrop { background-color: #2e2e2e; }
     input, button {
       padding: 10px;
-      margin-top: 10px;
+      margin: 10px;
       border: none;
       border-radius: 5px;
       font-size: 1rem;
@@ -68,37 +63,56 @@
   <nav>
     <ul>
       <li><a href="#hero">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#countdown">Launch</a></li>
-      <li><a href="#wallet">Wallet</a></li>
       <li><a href="#airdrop">Airdrop</a></li>
     </ul>
   </nav>
 
   <section id="hero">
     <h1>Fearium (FER)</h1>
-    <p>The crypto that moves with the Fear & Greed Index</p>
-  </section>
-
-  <section id="about">
-    <h2>About Fearium</h2>
-    <p>Fearium is a smart token reflecting real-time market emotions: fear and greed.</p>
-  </section>
-
-  <section id="countdown">
-    <h2>Trading Starts</h2>
-    <p>Countdown to May 1, 2025</p>
-  </section>
-
-  <section id="wallet">
-    <h2>Connect Wallet</h2>
-    <button>Connect Wallet</button>
+    <p>Backed by the Fear & Greed Index</p>
   </section>
 
   <section id="airdrop">
-    <h2>Claim Airdrop</h2>
-    <input type="text" placeholder="Enter your BNB wallet address">
-    <button>Claim 50 FER</button>
+    <h2>Claim 50 FER</h2>
+    <input type="text" id="receiver" placeholder="Enter your BNB wallet address" />
+    <button onclick="sendAirdrop()">Register & Claim</button>
+    <p id="status">Waiting...</p>
   </section>
+
+  <script>
+    const contractAddress = "0xE299Ee18bbb7c6b5c4E970E191741efA5DFbe70F";
+    const contractABI = [{
+      "constant": false,
+      "inputs": [
+        { "name": "to", "type": "address" },
+        { "name": "value", "type": "uint256" }
+      ],
+      "name": "transfer",
+      "outputs": [{ "name": "", "type": "bool" }],
+      "type": "function"
+    }];
+    const tokenDecimals = 18;
+    const tokenAmount = 50;
+
+    async function sendAirdrop() {
+      const receiver = document.getElementById("receiver").value;
+      if (!window.ethereum) return alert("Please install MetaMask");
+
+      const web3 = new Web3(window.ethereum);
+      await window.ethereum.request({ method: "eth_requestAccounts" });
+      const accounts = await web3.eth.getAccounts();
+      const sender = accounts[0];
+
+      const contract = new web3.eth.Contract(contractABI, contractAddress);
+      const amount = web3.utils.toBN(tokenAmount).mul(web3.utils.toBN(10).pow(web3.utils.toBN(tokenDecimals)));
+
+      try {
+        await contract.methods.transfer(receiver, amount).send({ from: sender });
+        document.getElementById("status").innerText = "50 FER sent to " + receiver;
+      } catch (err) {
+        document.getElementById("status").innerText = "Error: " + err.message;
+      }
+    }
+  </script>
 </body>
 </html>
